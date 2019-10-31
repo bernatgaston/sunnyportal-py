@@ -62,6 +62,11 @@ class Client(object):
         res = self.do_request(req)
         return [Plant(self, p['oid'], p['name']) for p in res.plants]
 
+    def get_homemanager(self):
+        req = requests.HomemanagerRequest(self.get_token())
+        res = self.do_request(req)
+        return res
+
 
 class Plant(object):
     def __init__(self, client, oid, name):

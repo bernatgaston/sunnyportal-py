@@ -116,6 +116,10 @@ class PlantListResponse(ResponseBase):
                 'name': self.get_or_raise(p, 'name')
             })
 
+class HomemanagerResponse(ResponseBase):
+    def parse(self,data):
+        return data
+
 
 class PlantProfileResponse(ResponseBase):
     def parse(self, data):

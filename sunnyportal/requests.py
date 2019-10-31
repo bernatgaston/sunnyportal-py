@@ -63,6 +63,7 @@ class RequestBase(object):
         self.url += "/".join([urllib.parse.quote(s) for s in segments])
         if params:
             self.url += "?%s" % urllib.parse.urlencode(params)
+        print(self.url)
 
     def log_request(self, method, url):
         self.log.debug("%s %s", method, url)
@@ -70,6 +71,8 @@ class RequestBase(object):
     def perform(self, connection):
         assert(self.url is not None)
 
+        print("Perform request")
+        print(self.url)
         self.log_request(self.method, self.url)
         connection.request(self.method, self.url)
 
@@ -114,6 +117,17 @@ class PlantListRequest(RequestBase):
 
     def handle_response(self, data):
         return responses.PlantListResponse(data)
+
+class HomemanagerRequest(RequestBase):
+    def __init__(self, token):
+        super().__init__(service='homemanager', token=token)
+        self.prepare_url([token.identifier])
+
+    def handle_response(self, data):
+        #TODO
+        return responses.HomemanagerResponse(data)
+
+
 
 
 class PlantRequest(RequestBase):
